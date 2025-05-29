@@ -1,0 +1,11 @@
+flask
+opencv-python
+mediapipe
+scikit-learn
+joblib
+numpy
+flask-socketio
+eventlet
+python-engineio
+python-socketio
+gunicorn
