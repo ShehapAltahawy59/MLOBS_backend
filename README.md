@@ -1,99 +1,143 @@
-# Hand Gesture Recognition System
+# Hand Landmarks Prediction Project
 
+This project predicts hand gestures using machine learning models trained on hand landmarks data. It compares multiple models, selects the best based on evaluation metrics, and tracks experiments using MLflow.
 
-![Alt](https://github.com/ShehapAltahawy59/Hand-Gesture-Classification-Using-MediaPipe-Landmarks-from-the-HaGRID-Dataset/raw/main/demo.gif?v=3) 
-
-
-*Real-time gesture classification demo*
-
-## Table of Contents
-1. [Project Overview](#project-overview)
-2. [System Architecture](#system-architecture)
-3. [Model Development](#model-development)
-4. [Installation](#installation)
-5. [Usage](#usage)
-6. [Directory Structure](#directory-structure)
-7. [License](#license)
+---
 
 ## Project Overview
-A comprehensive hand gesture recognition pipeline featuring:
-- Multi-model machine learning system
-- Complete data preprocessing workflow
-- Web-based interface via Flask
-- Real-time classification with 98.7% accuracy
 
-## System Architecture
+This repository includes:
 
-graph TD
-    A[Webcam Input] --> B[MediaPipe Landmark Detection]
-    B --> C[Feature Extraction]
-    C --> D[Pre-trained Model Inference]
-    D --> E[Flask Web Interface]
+* **Data Preprocessing**: Preparing the dataset for training and testing.
+* **Model Training**: Training various machine learning models like Logistic Regression, SVM, KNN, and Random Forest.
+* **Model Evaluation**: Evaluating models using metrics like accuracy and F1-score.
+* **Experiment Tracking**: Using MLflow to log parameters, metrics, and models.
+* **Best Model Selection**: SVM was chosen as the best model based on its superior F1-score and accuracy.
 
+---
 
-## Model Development
-### Dataset Preparation
-- Located in `dataset/` directory
-- Includes labeled gesture samples
+## Prerequisites
 
-### Preprocessing Pipeline (notebooks/)
-1. Data normalization
-2. Feature engineering
-3. Train-test splitting
+### Install Required Libraries
 
-### Model Training Workflow
-1. Initial evaluation of multiple algorithms
-2. Selection of top 3 performers (SVM, KNN, Random Forest)
-3. Hyperparameter tuning via GridSearchCV
-4. Final model selection based on:
-   - Accuracy (98.7% for SVM)
-   - Inference speed
-   - Memory footprint
-
-## Installation
-
-### Prerequisites
-- Python 3.8+
-- Webcam-enabled system
-- 4GB RAM minimum
+Run the following command to install the required libraries:
 
 ```bash
-# Clone repository
-git clone https://github.com/ShehapAltahawy59/Hand-Gesture-Classification-Using-MediaPipe-Landmarks-from-the-HaGRID-Dataset.git
-cd hand-gesture-recognition
-
-# Create virtual environment
-python -m venv venv
-source venv/bin/activate  # Linux/MacOS
-.\venv\Scripts\activate   # Windows
-
-# Install dependencies
 pip install -r requirements.txt
 ```
 
-## Usage
+### Required Python Libraries
 
-### Running the Web Interface
-```bash
-python app.py
-```
-Access the interface at `http://localhost:5000`
+* pandas
+* numpy
+* scikit-learn
+* matplotlib
+* mlflow
+* joblib
 
-### Running the script
-```bash
-python script.py
-```
+---
 
+## Dataset
 
-## Directory Structure
-```
-.
-├── models/                # Pretrained model files
-│   ├── svm_model.pkl
-├── dataset/               # Training datasets
-├── notebooks.ipynb            # Jupyter notebooks
-├── app.py                 # Flask application
-├── requirements.txt       # Dependencies
-└── demo.gif               # System demonstration
-```
+The dataset (`hand_landmarks_data.csv`) contains hand landmarks and their corresponding gesture labels. It is used for training and testing the models.
+
+---
+
+## Model Training and Evaluation
+
+### Models Used
+
+1. **Logistic Regression**
+2. **Support Vector Machine (SVM)**
+3. **K-Nearest Neighbors (KNN)**
+4. **Random Forest**
+
+### Results Summary
+
+| Model                           | Accuracy  | F1 Score  |
+| ------------------------------- | --------- | --------- |
+| Logistic Regression             | 0.849     | 0.848     |
+| SVM with GridSearchCV           | **0.986** | **0.985** |
+| KNN with GridSearchCV           | 0.979     | 0.979     |
+| Random Forest with GridSearchCV | 0.977     | 0.977     |
+
+**Selected Model**: SVM was chosen for its superior performance in terms of both accuracy and F1 score.
+
+---
+
+## How to Run
+
+1. Clone the repository:
+
+   ```bash
+   git clone <repository_url>
+   cd <repository_directory>
+   ```
+
+2. Preprocess the data:
+
+   The preprocessing is handled in the `preprocessing.py` script.
+
+3. Train the models:
+
+   Use the `train.py` script to train the models. MLflow will automatically log results.
+
+   ```bash
+   python train.py
+   ```
+
+4. Track Experiments:
+
+   Start the MLflow server:
+
+   ```bash
+   mlflow ui
+   ```
+
+   Navigate to `http://localhost:5000` to view experiment results.
+
+---
+
+## Files
+
+* `DataSet/hand_landmarks_data.csv`: Dataset for training and testing.
+* `preprocessing.py`: Preprocessing script.
+* `train.py`: Model training script.
+* `requirements.txt`: Python library dependencies.
+
+---
+
+## Experiment Tracking with MLflow
+
+The project uses MLflow for:
+
+* Logging model parameters and metrics.
+* Saving trained models.
+* Comparing model performance.
+
+To view experiment results:
+
+1. Start the MLflow server with:
+
+   ```bash
+   mlflow ui
+   ```
+
+2. Open your browser and go to `http://localhost:5000`.
+
+---
+
+## Future Work
+
+* Add deep learning models for better accuracy.
+* Implement real-time hand gesture recognition using a webcam.
+* Integrate the system into a web or mobile application.
+
+---
+
+## License
+
+This project is licensed under the MIT License. See the `LICENSE` file for details.
+
+---
 
