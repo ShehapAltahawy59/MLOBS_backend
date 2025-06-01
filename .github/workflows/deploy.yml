@@ -1,0 +1,45 @@
+name: Deploy & test
+
+on:
+  push:
+    branches: [ main, master ]
+  pull_request:
+    branches: [ main, master ]
+
+env:
+  AWS_REGION: us-east-1
+  AWS_ACCOUNT_ID: "060795916912"  # CHANGE THIS: Replace with your AWS Account ID
+  ECR_REPOSITORY: churn-prediction
+  # CHANGE THIS: Replace with your name and last 3 digits of phone number
+  IMAGE_TAG: shehab-659
+  # CHANGE THIS: Your unique project name (this prevents conflicts)
+  PROJECT_NAME: shehab-project
+
+jobs:
+  test-and-deploy:
+    runs-on: ubuntu-latest
+    
+    steps:
+    # Step 1: Checkout code
+    - name: Checkout code
+      uses: actions/checkout@v3
+
+    # Step 2: Set up Python
+    - name: Set up Python
+      uses: actions/setup-python@v4
+      with:
+        python-version: '3.9'
+
+    # Step 3: Install dependencies and run unit tests
+    - name: Install dependencies
+      run: |
+        python -m pip install --upgrade pip
+        if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
+        pip install pytest pytest-cov
+
+    - name: Run unit tests
+      run: |
+        # Run tests from main directory (looks for test_*.py files)
+        python test_app.py
+        # Alternative: if you want to run specific test files, use:
+        # pytest test_*.py -v

@@ -1,0 +1,10 @@
+flask
+joblib
+numpy
+gunicorn
+flask_cors
+scikit-learn
+httpx
+prometheus_flask_exporter
+prometheus-client
+Werkzeug
