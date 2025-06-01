@@ -204,5 +204,5 @@ def custom_metrics():
 
 if __name__ == '__main__':
     # Set memory usage on startup
-    #memory_usage_gauge.set(get_memory_usage())
+    memory_usage_gauge.set(get_memory_usage())
     app.run(host='0.0.0.0', port=5000, debug=False)

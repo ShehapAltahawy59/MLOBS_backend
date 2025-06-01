@@ -1,143 +1,95 @@
-# Hand Landmarks Prediction Project
+# ML API Server
 
-This project predicts hand gestures using machine learning models trained on hand landmarks data. It compares multiple models, selects the best based on evaluation metrics, and tracks experiments using MLflow.
+This project is a Flask-based API server that provides machine learning predictions based on hand landmarks. It includes monitoring and visualization tools using Prometheus and Grafana.
 
----
+## Overview
 
-## Project Overview
+The server loads a pre-trained SVM model (stored in `Models/SVM_best_model.pkl`) and exposes an endpoint (`/get_prediction`) that accepts hand landmark data. It processes the landmarks, normalizes them, and returns a prediction.
 
-This repository includes:
+## Features
 
-* **Data Preprocessing**: Preparing the dataset for training and testing.
-* **Model Training**: Training various machine learning models like Logistic Regression, SVM, KNN, and Random Forest.
-* **Model Evaluation**: Evaluating models using metrics like accuracy and F1-score.
-* **Experiment Tracking**: Using MLflow to log parameters, metrics, and models.
-* **Best Model Selection**: SVM was chosen as the best model based on its superior F1-score and accuracy.
-
----
+- **ML Prediction API**: Endpoint to submit hand landmarks and receive predictions.
+- **Monitoring**: Prometheus metrics for tracking predictions, data quality, and server performance.
+- **Visualization**: Grafana dashboards for real-time monitoring.
+- **Containerization**: Docker and Docker Compose setup for easy deployment.
+- **Testing**: Comprehensive unit tests for API endpoints and prediction logic.
 
 ## Prerequisites
 
-### Install Required Libraries
+- Python 3.9
+- Docker and Docker Compose
 
-Run the following command to install the required libraries:
-
-```bash
-pip install -r requirements.txt
-```
-
-### Required Python Libraries
-
-* pandas
-* numpy
-* scikit-learn
-* matplotlib
-* mlflow
-* joblib
-
----
-
-## Dataset
-
-The dataset (`hand_landmarks_data.csv`) contains hand landmarks and their corresponding gesture labels. It is used for training and testing the models.
-
----
-
-## Model Training and Evaluation
-
-### Models Used
-
-1. **Logistic Regression**
-2. **Support Vector Machine (SVM)**
-3. **K-Nearest Neighbors (KNN)**
-4. **Random Forest**
-
-### Results Summary
-
-| Model                           | Accuracy  | F1 Score  |
-| ------------------------------- | --------- | --------- |
-| Logistic Regression             | 0.849     | 0.848     |
-| SVM with GridSearchCV           | **0.986** | **0.985** |
-| KNN with GridSearchCV           | 0.979     | 0.979     |
-| Random Forest with GridSearchCV | 0.977     | 0.977     |
-
-**Selected Model**: SVM was chosen for its superior performance in terms of both accuracy and F1 score.
-
----
-
-## How to Run
+## Installation
 
 1. Clone the repository:
-
    ```bash
-   git clone <repository_url>
-   cd <repository_directory>
+   git clone <repository-url>
+   cd <repository-directory>
    ```
 
-2. Preprocess the data:
-
-   The preprocessing is handled in the `preprocessing.py` script.
-
-3. Train the models:
-
-   Use the `train.py` script to train the models. MLflow will automatically log results.
-
+2. Install Python dependencies:
    ```bash
-   python train.py
+   pip install -r requirements.txt
    ```
 
-4. Track Experiments:
+3. Ensure the pre-trained model is available in the `Models` directory.
 
-   Start the MLflow server:
+## Running the Application
 
-   ```bash
-   mlflow ui
-   ```
+### Using Docker Compose
 
-   Navigate to `http://localhost:5000` to view experiment results.
+To run the entire stack (API, Prometheus, Grafana, Node Exporter):
 
----
+```bash
+docker-compose up
+```
 
-## Files
+This will start:
+- ML API server on port 5000
+- Prometheus on port 9090
+- Grafana on port 3000
+- Node Exporter on port 9100
 
-* `DataSet/hand_landmarks_data.csv`: Dataset for training and testing.
-* `preprocessing.py`: Preprocessing script.
-* `train.py`: Model training script.
-* `requirements.txt`: Python library dependencies.
+### Running Locally
 
----
+To run the Flask application locally:
 
-## Experiment Tracking with MLflow
+```bash
+python app.py
+```
 
-The project uses MLflow for:
+The server will be available at `http://localhost:5000`.
 
-* Logging model parameters and metrics.
-* Saving trained models.
-* Comparing model performance.
+## API Endpoints
 
-To view experiment results:
+- **GET /**: Returns a simple message indicating the server is running.
+- **GET /health**: Health check endpoint returning server status and memory usage.
+- **POST /get_prediction**: Accepts JSON data with hand landmarks and returns a prediction.
+- **GET /custom_metrics**: Returns a summary of custom metrics.
 
-1. Start the MLflow server with:
+## Testing
 
-   ```bash
-   mlflow ui
-   ```
+Run the unit tests using:
 
-2. Open your browser and go to `http://localhost:5000`.
+```bash
+python test_app.py
+```
 
----
+## Monitoring
 
-## Future Work
+- **Prometheus**: Access the Prometheus UI at `http://localhost:9090` to view metrics.
+- **Grafana**: Access Grafana at `http://localhost:3000` (default credentials: admin/admin123) to view dashboards.
 
-* Add deep learning models for better accuracy.
-* Implement real-time hand gesture recognition using a webcam.
-* Integrate the system into a web or mobile application.
+## Project Structure
 
----
+- `app.py`: Main Flask application with API endpoints and prediction logic.
+- `test_app.py`: Unit tests for the API and prediction functions.
+- `requirements.txt`: Python dependencies.
+- `Dockerfile`: Instructions for building the Docker image.
+- `docker-compose.yml`: Configuration for running the entire stack.
+- `Models/`: Directory containing the pre-trained model.
+- `prometheus/`: Prometheus configuration files.
+- `grafana/`: Grafana dashboards and provisioning files.
 
-## License
 
-This project is licensed under the MIT License. See the `LICENSE` file for details.
-
----
 
