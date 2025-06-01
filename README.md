@@ -80,6 +80,19 @@ python test_app.py
 - **Prometheus**: Access the Prometheus UI at `http://localhost:9090` to view metrics.
 - **Grafana**: Access Grafana at `http://localhost:3000` (default credentials: admin/admin123) to view dashboards.
 
+### Metrics in Grafana
+
+The following metrics are displayed in Grafana dashboards:
+
+- **ML Predictions Total**: Tracks the total number of predictions made by the model, categorized by prediction class.
+- **ML Prediction Confidence**: Measures the time taken to make predictions, helping to identify performance bottlenecks.
+- **ML Model Loaded**: Indicates whether the ML model is successfully loaded (1=loaded, 0=not loaded).
+- **ML Data Quality Total**: Counts data quality issues, such as missing landmarks or invalid data.
+- **ML Landmark Count**: Shows the distribution of landmark counts in requests, aiding in understanding data patterns.
+- **ML App Memory Usage**: Monitors the memory usage of the ML application, ensuring efficient resource utilization.
+
+These metrics provide insights into the performance, reliability, and efficiency of the ML API server, helping to maintain and optimize the system.
+
 ## Project Structure
 
 - `app.py`: Main Flask application with API endpoints and prediction logic.
